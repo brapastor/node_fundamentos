@@ -6,6 +6,7 @@ var express = require("express"),
 router.route('/')
     .get(function (req, res)
     {
+        console.log(req.user);
         res.render('main/index.html');
     });
 
