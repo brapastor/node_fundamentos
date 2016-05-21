@@ -6,7 +6,10 @@ var express = require ('express'),
 router.route('/ingresar/')
     .get (function (req,res)
     {
-        res.render('user/login.html')
+        var context = {
+            error_message :  req.flash('error')[0]
+        }
+        res.render('user/login.html', context);
     });
 
 router.route('/registrar/')

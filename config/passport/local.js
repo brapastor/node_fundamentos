@@ -14,7 +14,7 @@ var local = function (server) {
              .then(function (user)
              {
                 if(!user){
-                    return done (null,false)
+                    return done (null,false,{'message': 'El username '  + username + ' no esta registrado'});
                 }else {
                     if(user.password == password){
                         return done(null,user);

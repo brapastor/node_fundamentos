@@ -8,11 +8,15 @@ var express = require("express"), //requiriendo express
     bodyParser = require("body-parser"),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    flash = require('connect-flash'),
     port = process.env.PORT || 8000;
 // endregion
 
 //BodyParser
 server.use(bodyParser.urlencoded({ extended: false }));
+
+//connect flash
+server.use(flash());
 
 //cookie
 server.use(cookieParser());
