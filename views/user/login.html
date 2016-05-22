@@ -5,7 +5,7 @@
 	<title>Ejemplo Libreria</title>
 	<link rel="stylesheet" href="/css/fonts.css">
 	<link rel="stylesheet" href="/css/main.css">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="styleshee" type="text/css">
 </head>
 <body>
 	<header class="cabecera">
@@ -24,6 +24,11 @@
 
 		<h2 class="login__registro">
 			Log in
+			{% if user %}
+				Hola {{user.username}}
+			{% else %}
+				El usuario no esta logeado
+			{% endif %}
 		</h2>
 		<section class="login__registro__datos">
 			<form method="POST" action="/login">

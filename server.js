@@ -9,11 +9,12 @@ var express = require("express"), //requiriendo express
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     flash = require('connect-flash'),
+    RedisStore = require('connect-redis')(session),
     port = process.env.PORT || 8000;
 // endregion
 
 //BodyParser
-server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.urlencoded({ extended: false })); //post
 
 //connect flash
 server.use(flash());
@@ -23,6 +24,11 @@ server.use(cookieParser());
 
 //sessiones
 server.use(session({
+    store: new RedisStore({
+        host:'127.0.0.1',
+        port:6379,
+        db: 1
+    }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
@@ -50,5 +56,23 @@ server.listen(port,function()
 });
 //endregion
 
+
+//creando un local un moddlewar //que esta variable este en todos los templates
+server.use(function (req, res,next)
+{
+    server.locals.user = req.user;
+    next();
+});
+
+if(process.env.NODE_ENV === 'dev'){
+    console.log("estoy en desarrollo");
+    require('./config/server/local')(server);
+}
+
+if(process.env.NODE_ENV === 'prod'){
+    console.log("estoy en produccion");
+    require('./config/server/prod')(server);
+
+}
 //enlazamos el server a los enrutadores mandandole como parametro el server
 require('./routers/index')(server);
